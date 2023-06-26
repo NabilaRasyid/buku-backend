@@ -10,7 +10,7 @@ $nama = isset($_POST['nama']) ? $_POST['nama'] : '';
 $jenis_kelamin = isset($_POST['jenis_kelamin']) ? $_POST['jenis_kelamin'] : '';
 $alamat = isset($_POST['alamat']) ? $_POST['alamat'] : '';
 $no_hp = isset($_POST['no_hp']) ? $_POST['no_hp'] : '';
-$tanggal_terdaftar = isset($_POST['tanggal_terdaftar']) ? $_POST['kode'] : '';
+$tanggal_terdaftar = isset($_POST['tanggal_terdaftar']) ? $_POST['tanggal_terdaftar'] : '';
 
 try {
     
