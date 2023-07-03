@@ -1,53 +1,48 @@
 <?php
-// Include file koneksi.php untuk mendapatkan koneksi ke database
 include 'koneksi.php';
-
 $conn = getConnection();
 
-// Mendapatkan data yang dikirim melalui metode POST
+$id = isset($_POST['id']) ? $_POST['id'] : '';
 $nomor = isset($_POST['nomor']) ? $_POST['nomor'] : '';
 $nama = isset($_POST['nama']) ? $_POST['nama'] : '';
-$jenisKelamin = isset($_POST['jenis_kelamin']) ? $_POST['jenis_kelamin'] : '';
+$jenis_kelamin = isset($_POST['jenis_kelamin']) ? $_POST['jenis_kelamin'] : '';
 $alamat = isset($_POST['alamat']) ? $_POST['alamat'] : '';
-$noHp = isset($_POST['no_hp']) ? $_POST['no_hp'] : '';
-$tanggalTerdaftar = isset($_POST['tanggal_terdaftar']) ? $_POST['tanggal_terdaftar'] : '';
+$no_hp = isset($_POST['no_hp']) ? $_POST['no_hp'] : '';
+$tanggal_terdaftar = isset($_POST['tanggal_terdaftar']) ? $_POST['tanggal_terdaftar'] : '';
 
 try {
-    // Query SQL untuk insert data anggota
-    $query = "INSERT INTO anggota (nomor, nama, jenis_kelamin, alamat, no_hp, tanggal_terdaftar) 
-              VALUES (:nomor, :nama, :jenisKelamin, :alamat, :noHp, :tanggalTerdaftar)";
+    $conn = getConnection();
 
-    // Mempersiapkan statement PDO untuk eksekusi query
+    $query = "INSERT INTO anggota (id, nomor, nama, jenis_kelamin, alamat, no_hp, tanggal_terdaftar) 
+              VALUES (:id, :nomor, :nama, :jenis_kelamin, :alamat, :no_hp, :tanggal_terdaftar)";
+
     $statement = $conn->prepare($query);
 
-    // Mengikat parameter dengan nilai yang sesuai
+    $statement->bindParam(':id', $id);
     $statement->bindParam(':nomor', $nomor);
     $statement->bindParam(':nama', $nama);
-    $statement->bindParam(':jenisKelamin', $jenisKelamin);
+    $statement->bindParam(':jenis_kelamin', $jenis_kelamin);
     $statement->bindParam(':alamat', $alamat);
-    $statement->bindParam(':noHp', $noHp);
-    $statement->bindParam(':tanggalTerdaftar', $tanggalTerdaftar);
+    $statement->bindParam(':no_hp', $no_hp);
+    $statement->bindParam(':tanggal_terdaftar', $tanggal_terdaftar);
 
-    // Eksekusi statement
     $statement->execute();
 
-    // Mengembalikan response sukses
     $response = [
         'status' => 'success',
         'message' => 'Data anggota berhasil ditambahkan'
     ];
-} catch(PDOException $e) {
-    // Jika terjadi error, tampilkan pesan error
+} catch (PDOException $e) {
+
     $response = [
         'status' => 'error',
         'message' => 'Terjadi kesalahan saat menambahkan data anggota: ' . $e->getMessage()
     ];
 }
 
-// Mengirimkan response JSON
-header('Content-Type: application/json');
+
 echo json_encode($response);
 
-// Menutup koneksi
+
 $conn = null;
 ?>

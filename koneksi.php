@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: http://localhost:5173');
+header('Access-Control-Allow-Header: Content-Type');
+header('Access-Control-Allow-Method: GET, POST, OPTION');
+
     function getConnection() {
         $host = 'localhost';
         $dbname = 'buku';
